@@ -3,6 +3,7 @@ package de.elias.challengeplugin;
 import de.elias.challengeplugin.api.ChallengeManager;
 import de.elias.challengeplugin.challenges.ChunkBlockChallenge;
 import de.elias.challengeplugin.commands.ChallengesCommand;
+import de.elias.challengeplugin.commands.WorldResetCommand;
 import de.elias.challengeplugin.gui.MainMenuHolder;
 import de.elias.challengeplugin.gui.TimerSettingsHolder;
 import de.elias.challengeplugin.timer.ChallengeTimer;
@@ -26,18 +27,18 @@ public final class ChallengePlugin extends JavaPlugin {
             getCommand("challenges").setExecutor(new ChallengesCommand(challengeManager, challengeTimer));
         }
         if (getCommand("timer") != null) {
-            getCommand("timer").setExecutor(new TimerCommand(challengeTimer));
-        }
-        if (getCommand("timer") != null) {
             getCommand("timer").setExecutor(new TimerCommand(challengeTimer, challengeManager));
             getCommand("timer").setTabCompleter(new de.elias.challengeplugin.timer.TimerTabCompleter());
+        }
+        if (getCommand("worldreset") != null) {
+            getCommand("worldreset").setExecutor(new WorldResetCommand(challengeTimer, challengeManager));
         }
 
         // Registriere die erste Challenge (Chunk Block Challenge)
         ChunkBlockChallenge chunkBlockChallenge = new ChunkBlockChallenge();
         challengeManager.registerChallenge(chunkBlockChallenge);
 
-        // Registriere Event-Listener für Hauptmenü und Timer-Einstellungen
+        // Registriere Event-Listener
         Bukkit.getPluginManager().registerEvents(new MainMenuHolder(challengeManager, challengeTimer), this);
         Bukkit.getPluginManager().registerEvents(new TimerSettingsHolder(challengeManager, challengeTimer), this);
 
