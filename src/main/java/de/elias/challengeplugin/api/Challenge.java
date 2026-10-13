@@ -1,4 +1,4 @@
-package de.deinname.challengeplugin.api;
+package de.elias.challengeplugin.api;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -20,6 +20,5 @@ public interface Challenge extends Listener {
 
     void onStop();
 
-    // Methode für spezifische Einstellungen im Challenge-Settings-Menu
     void openSettingsMenu(Player player);
 }
