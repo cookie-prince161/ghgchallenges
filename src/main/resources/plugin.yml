@@ -1,0 +1,23 @@
+name: ChallengePlugin
+version: 1.0-SNAPSHOT
+main: de.deinname.challengeplugin.ChallengePlugin
+api-version: '1.20'
+authors: [DeinName]
+description: Ein modulares Challenge-Plugin mit GUI und Timer.
+
+commands:
+  challenges:
+    description: Öffnet das Challenge-Hauptmenü.
+    aliases: [challenge, c, menu]
+    permission: challengeplugin.admin
+    permission-message: Du hast keine Berechtigung für diesen Befehl.
+  timer:
+    description: Steuert den Challenge-Timer und dessen Einstellungen.
+    aliases: [t]
+    permission: challengeplugin.admin
+    permission-message: Du hast keine Berechtigung für diesen Befehl.
+
+permissions:
+  challengeplugin.admin:
+    description: Erlaubt die Steuerung von Challenges und Timern.
+    default: op
