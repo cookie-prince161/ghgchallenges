@@ -1,0 +1,29 @@
+name: Build Minecraft Plugin
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Repository auschecken
+      uses: actions/checkout@v4
+
+    - name: Java 17 einrichten
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        cache: 'maven'
+
+    - name: Mit Maven kompilieren und bauen
+      run: mvn clean package
+
+    - name: Plugin-Datei als Artefakt speichern
+      uses: actions/upload-artifact@v4
+      with:
+        name: ChallengePlugin
+        path: target/challengeplugin-1.0-SNAPSHOT.jar
