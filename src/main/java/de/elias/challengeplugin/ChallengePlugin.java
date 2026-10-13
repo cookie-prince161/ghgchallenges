@@ -3,6 +3,8 @@ package de.elias.challengeplugin;
 import de.elias.challengeplugin.api.ChallengeManager;
 import de.elias.challengeplugin.challenges.ChunkBlockChallenge;
 import de.elias.challengeplugin.commands.ChallengesCommand;
+import de.elias.challengeplugin.gui.MainMenuHolder;
+import de.elias.challengeplugin.gui.TimerSettingsHolder;
 import de.elias.challengeplugin.timer.ChallengeTimer;
 import de.elias.challengeplugin.timer.TimerCommand;
 import org.bukkit.Bukkit;
@@ -30,8 +32,10 @@ public final class ChallengePlugin extends JavaPlugin {
         // Registriere die erste Challenge (Chunk Block Challenge)
         ChunkBlockChallenge chunkBlockChallenge = new ChunkBlockChallenge();
         challengeManager.registerChallenge(chunkBlockChallenge);
-        // Registriere auch den Event-Listener fürs Hauptmenü
-        Bukkit.getPluginManager().registerEvents(new de.elias.challengeplugin.gui.MainMenuHolder(challengeManager, challengeTimer), this);
+
+        // Registriere Event-Listener für Hauptmenü und Timer-Einstellungen
+        Bukkit.getPluginManager().registerEvents(new MainMenuHolder(challengeManager, challengeTimer), this);
+        Bukkit.getPluginManager().registerEvents(new TimerSettingsHolder(challengeManager, challengeTimer), this);
 
         getLogger().info("ChallengePlugin wurde erfolgreich aktiviert, Elias!");
     }
