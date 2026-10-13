@@ -28,6 +28,10 @@ public final class ChallengePlugin extends JavaPlugin {
         if (getCommand("timer") != null) {
             getCommand("timer").setExecutor(new TimerCommand(challengeTimer));
         }
+        if (getCommand("timer") != null) {
+            getCommand("timer").setExecutor(new TimerCommand(challengeTimer, challengeManager));
+            getCommand("timer").setTabCompleter(new de.elias.challengeplugin.timer.TimerTabCompleter());
+        }
 
         // Registriere die erste Challenge (Chunk Block Challenge)
         ChunkBlockChallenge chunkBlockChallenge = new ChunkBlockChallenge();
