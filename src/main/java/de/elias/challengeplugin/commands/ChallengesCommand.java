@@ -29,19 +29,28 @@ public class ChallengesCommand implements CommandExecutor {
             return true;
         }
 
-        // Unterstützung für Synonyme wie /challenge pause oder /challenge resume
         if (args.length > 0) {
             String sub = args[0].toLowerCase();
-            if (sub.equals("pause") || sub.equals("stop")) {
-                timer.pause();
-                player.sendMessage(Component.text("⏸ Timer und Challenges pausiert!", NamedTextColor.YELLOW));
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 0.8f);
-                return true;
-            } else if (sub.equals("resume") || sub.equals("start")) {
-                timer.resume();
-                player.sendMessage(Component.text("⏱ Timer und Challenges fortgesetzt!", NamedTextColor.GREEN));
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0f, 1.2f);
-                return true;
+            switch (sub) {
+                case "pause":
+                case "stop":
+                    timer.pause();
+                    challengeManager.stopAllChallenges();
+                    player.sendMessage(Component.text("⏸ Timer und alle Challenges gestoppt/pausiert!", NamedTextColor.YELLOW));
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 0.8f);
+                    return true;
+                case "resume":
+                case "start":
+                    timer.resume();
+                    player.sendMessage(Component.text("⏱ Timer und Challenges gestartet/fortgesetzt!", NamedTextColor.GREEN));
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0f, 1.2f);
+                    return true;
+                case "reset":
+                    timer.reset();
+                    challengeManager.stopAllChallenges();
+                    player.sendMessage(Component.text("🔄 Timer zurückgesetzt und Challenges gestoppt.", NamedTextColor.AQUA));
+                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
+                    return true;
             }
         }
 
