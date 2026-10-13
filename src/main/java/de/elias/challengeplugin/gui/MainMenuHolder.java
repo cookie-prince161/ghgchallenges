@@ -35,7 +35,7 @@ public class MainMenuHolder implements InventoryHolder, Listener {
     public void openMenu(Player player) {
         Inventory inv = Bukkit.createInventory(this, 27, Component.text("⚡ Challenge Hauptmenü", NamedTextColor.DARK_PURPLE));
 
-        // Slot 9: Singleplayer / Multiplayer Toggle
+        // Slot 9: Singleplayer / Multiplayer Toggle (Mitte links)
         updateToggleItem(inv);
 
         // Slot 8: Timer-Einstellungen (Uhr)
@@ -46,7 +46,7 @@ public class MainMenuHolder implements InventoryHolder, Listener {
         clockLore.add("§7Aktuelle Zeit: §e" + timer.formatTime(timer.getSeconds()));
         clockLore.add("§7Status: " + (timer.isRunning() ? "§aLäuft" : "§cPausiert"));
         clockLore.add("");
-        clockLore.add("§eKlicken zum Umschalten (Start/Pause)!");
+        clockLore.add("§eKlicken, um Timer-Einstellungen zu öffnen!");
         clockMeta.setLore(clockLore);
         clock.setItemMeta(clockMeta);
         inv.setItem(8, clock);
@@ -118,28 +118,20 @@ public class MainMenuHolder implements InventoryHolder, Listener {
             return;
         }
 
-        // Slot 8: Timer Schnellstart / Pause per Klick
+        // Slot 8: Öffnet das Timer-Einstellungen-Menü
         if (slot == 8) {
-            if (timer.isRunning()) {
-                timer.pause();
-                player.sendMessage(Component.text("⏸ Timer pausiert!", NamedTextColor.YELLOW));
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 0.8f);
-            } else {
-                timer.resume();
-                player.sendMessage(Component.text("⏱ Timer gestartet!", NamedTextColor.GREEN));
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0f, 1.2f);
-            }
-            holder.openMenu(player); // Menü aktualisieren
+            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1.0f, 1.0f);
+            TimerSettingsHolder settingsHolder = new TimerSettingsHolder(challengeManager, timer);
+            settingsHolder.openMenu(player);
             return;
         }
 
-        // Klick auf Challenge-Items (Slots ab 11)
+        // Klick auf Challenge-Items
         ItemStack clicked = event.getCurrentItem();
         if (clicked != null && clicked.getType() != Material.AIR) {
-            // Finde heraus, welche Challenge angeklickt wurde anhand des Item-Namens
             if (clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()) {
                 String displayName = net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText().serialize(clicked.getItemMeta().displayName());
-                
+
                 for (Challenge challenge : challengeManager.getChallenges()) {
                     if (displayName.contains(challenge.getName())) {
                         boolean newState = !challenge.isEnabled();
@@ -151,7 +143,7 @@ public class MainMenuHolder implements InventoryHolder, Listener {
                             challenge.onStop();
                             player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_LAND, 0.5f, 0.8f);
                         }
-                        holder.openMenu(player); // Menü neu laden, damit der Status (Grün/Rot) aktualisiert wird!
+                        holder.openMenu(player); // Menü neu laden
                         break;
                     }
                 }
