@@ -1,8 +1,8 @@
 name: ChallengePlugin
 version: 1.0-SNAPSHOT
-main: de.deinname.challengeplugin.ChallengePlugin
+main: de.elias.challengeplugin.ChallengePlugin
 api-version: '1.20'
-authors: [DeinName]
+authors: [Elias]
 description: Ein modulares Challenge-Plugin mit GUI und Timer.
 
 commands:
