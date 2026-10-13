@@ -3,7 +3,7 @@ version: '1.0'
 main: de.elias.challengeplugin.ChallengePlugin
 api-version: '1.20'
 authors: [Elias]
-description: Ein modulares Challenge-Plugin mit GUI und Timer.
+description: Ein modulares Challenge-Plugin mit GUI, Timer und WorldReset.
 
 commands:
   challenges:
@@ -16,8 +16,13 @@ commands:
     aliases: [t]
     permission: challengeplugin.admin
     permission-message: Du hast keine Berechtigung für diesen Befehl.
+  worldreset:
+    description: Generiert eine neue Welt mit neuem Seed und teleportiert alle Spieler.
+    aliases: [reset, newworld]
+    permission: challengeplugin.admin
+    permission-message: Du hast keine Berechtigung für diesen Befehl.
 
 permissions:
   challengeplugin.admin:
-    description: Erlaubt die Steuerung von Challenges und Timern.
+    description: Erlaubt die Steuerung von Challenges, Timern und Welt-Resets.
     default: op
